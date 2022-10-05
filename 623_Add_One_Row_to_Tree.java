@@ -17,19 +17,45 @@ class Solution {
     public TreeNode addOneRow(TreeNode root, int val, int depth) {
         
         if (depth == 1) {
-            TreeNode tree = new TreeNode(val);
+            return new TreeNode(val);
         }
      
-        TreeNode tempLeft = root.left;
-        TreeNode tempRight = root.right;
+        int level = 1;
+        search(root.left);
+        search(root.right);
         
-        root.left = new TreeNode(1);
-        root.right = new TreeNode(1);
-        
-        root.left.left = tempLeft;
-        root.right.right = tempRight;
+        root = appendVal(root,val);
         
     return root;
         
     }
+        
+    public static void search(TreeNode node) {
+        
+        if (node != null) {
+            
+        //  appendVal(node, val);
+            
+        // else, keep seraching    
+            
+        search(node.left);
+        search(node.right);
+            
+        }
+            
+    }
+    
+    public TreeNode appendVal(TreeNode node, int val) {
+        TreeNode tempLeft = node.left;
+        TreeNode tempRight = node.right;
+        
+        node.left = new TreeNode(val);
+        node.right = new TreeNode(val);
+        
+        node.left.left = tempLeft;
+        node.right.right = tempRight;
+        
+        return node;
+    }
+    
 }
