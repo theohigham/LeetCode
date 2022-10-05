@@ -14,48 +14,54 @@
  * }
  */
 class Solution {
+
     public TreeNode addOneRow(TreeNode root, int val, int depth) {
         
         if (depth == 1) {
-            return new TreeNode(val);
+            TreeNode original = root;
+            
+            root = new TreeNode(val);
+            root.left = original;
         }
-     
-        int level = 1;
-        search(root.left);
-        search(root.right);
         
-        root = appendVal(root,val);
+        search(root, 1, val, depth);
         
-    return root;
+        return root;
         
     }
-        
-    public static void search(TreeNode node) {
-        
-        if (node != null) {
-            
-        //  appendVal(node, val);
-            
-        // else, keep seraching    
-            
-        search(node.left);
-        search(node.right);
-            
-        }
-            
-    }
-    
-    public TreeNode appendVal(TreeNode node, int val) {
+  
+    public static TreeNode appendNodesTo(TreeNode node, int val) {
+        // Appends nodes of value val underneath node
+
         TreeNode tempLeft = node.left;
         TreeNode tempRight = node.right;
-        
-        node.left = new TreeNode(val);
-        node.right = new TreeNode(val);
-        
-        node.left.left = tempLeft;
-        node.right.right = tempRight;
-        
+
+        TreeNode newLeft = new TreeNode(val);
+        newLeft.left = tempLeft;
+
+        TreeNode newRight = new TreeNode(val);
+        newRight.right = tempRight;
+
+        node.left = newLeft;
+        node.right = newRight;
+
         return node;
+
+    }
+    
+    public static void search(TreeNode node, int level, int val, int depth) {
+
+        if (node != null) {
+            System.out.println("Value: " + node.val + " Level: " + level);
+            
+            if (level == depth-1) {
+                System.out.println("*Appending*");
+                node = appendNodesTo(node, val);
+            }
+            
+            search(node.left, level + 1, val, depth);
+            search(node.right, level + 1, val, depth);
+        }
     }
     
 }
