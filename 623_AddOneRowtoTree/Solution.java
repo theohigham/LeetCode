@@ -29,6 +29,21 @@ class Solution {
         return root;
         
     }
+
+    public static void search(TreeNode node, int level, int val, int depth) {
+
+        if (node != null) {
+            System.out.println("Value: " + node.val + " Level: " + level);
+            
+            if (level == depth-1) {
+                System.out.println("*Appending*");
+                node = appendNodesTo(node, val);
+            }
+            
+            search(node.left, level + 1, val, depth);
+            search(node.right, level + 1, val, depth);
+        }
+    }
   
     public static TreeNode appendNodesTo(TreeNode node, int val) {
         // Appends nodes of value val underneath node
@@ -47,21 +62,6 @@ class Solution {
 
         return node;
 
-    }
-    
-    public static void search(TreeNode node, int level, int val, int depth) {
-
-        if (node != null) {
-            System.out.println("Value: " + node.val + " Level: " + level);
-            
-            if (level == depth-1) {
-                System.out.println("*Appending*");
-                node = appendNodesTo(node, val);
-            }
-            
-            search(node.left, level + 1, val, depth);
-            search(node.right, level + 1, val, depth);
-        }
     }
     
 }
